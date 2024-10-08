@@ -1,0 +1,40 @@
+version: '3.8' # docker compose 자체의 버전을 의미
+services:
+  my-mongo-db:
+    image: mongo:latest
+    ports: 
+      - 27016:27017
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - mynet
+  
+  mytodoexpress:
+    build:
+      context: ./my-todo-express
+      dockerfile: Dockerfile
+    ports:
+      - 3001:3001
+    networks:
+      - mynet
+    depends_on:
+      - my-mongo-db
+  
+  mytodoreact:
+    build: 
+      context: ./my-todo-react
+      dockerfile: Dockerfile
+    ports:
+      - 5173:5173
+    networks:
+      - mynet
+    depends_on:
+      - mytodoexpress
+      
+networks:
+  mynet:
+volumes:
+  mongo-data:
+    external: true
+
+

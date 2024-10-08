@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-second-pod
+  labels:
+    app: my-second-pod
+spec:
+  containers:
+  - name: my-second-pod
+    image: devhehexd/myapp:latest

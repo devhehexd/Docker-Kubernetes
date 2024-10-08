@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-first-pod
+  labels:
+    app: my-first-pod
+spec:
+  containers:
+  - name: my-first-pod
+    image: captainyun/k8s-todo-front-app:v1
