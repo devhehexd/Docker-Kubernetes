@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todolist-spring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring
+  template:
+    metadata:
+      labels:
+        app: spring
+    spec:
+      containers:
+      - name: spring
+        image: devhehexd/todolistback:v3  # 위에서 만든 Docker 이미지 사용
+        ports:
+        - containerPort: 8081
+        env:
+        - name: SPRING_DATASOURCE_URL
+          value: "jdbc:mysql://todolist-mysql-service:3307/todolist"
+        - name: SPRING_DATASOURCE_USERNAME
+          value: "root"
+        - name: SPRING_DATASOURCE_PASSWORD
+          value: "rlqja"
+        - name: SERVER_SERVLET_CONTEXT_PATH
+          value: "/api"
+        - name: JAVA_OPTS
+          value: "-Xmx512m -Xms256m"
+        # livenessProbe:
+        #   httpGet:
+        #     path: /actuator/health
+        #     port: 8081
+        #   initialDelaySeconds: 30
+        #   periodSeconds: 10
+        # readinessProbe:
+        #   httpGet:
+        #     path: /actuator/health
+        #     port: 8081
+        #   initialDelaySeconds: 30
+        #   periodSeconds: 10
